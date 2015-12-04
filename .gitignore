@@ -1,0 +1,9 @@
+*.sublime-project
+*.sublime-workspace
+*.iws
+*.ipr
+*.iml
+*.swp
+/.idea/*
+node_modules/
+.ep_initialized

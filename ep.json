@@ -1,0 +1,11 @@
+{
+    "parts": [
+        {
+            "name": "ep_webhooks",
+            "hooks": {
+                "loadSettings": "ep_webhooks/serverHooks:loadSettings",
+                "handleMessage": "ep_webhooks/serverHooks:handleMessage"
+            }
+        }
+    ]
+}
