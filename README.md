@@ -32,6 +32,7 @@ Sample HTTP request made by ep_webhooks to the registered hook url:
 
 ```
 POST https://mydomain.com/api/notifications/pads/update
+X-API-KEY: supersecretApiKeyForTheMasses
 {
     padIds: ['pad1', 'pad2', 'pad3']
 }
