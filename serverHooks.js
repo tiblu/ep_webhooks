@@ -35,6 +35,7 @@ var callPadUpdateWebhooks = _.debounce(function () {
         updateHooksToCall.forEach(function (path) {
             request
                 .post(path)
+                .set('X-API-KEY', pluginSettings.apiKey)
                 .send({padIds: changedPadIds})
                 .end(function (err, res) {
                     if (err) {

@@ -3,7 +3,7 @@ Webhooks for Etherpad Lite.
 
 # WORK IN PROGRESS
 
-While it's somewhat useful, work is in progress. See the **TODO** below. Any ideas and contributions are welcome, but see the **TODO** section first.
+While it's somewhat useful, work is in progress. See the **TODO** below. Any ideas and contributions are welcome, see the **TODO** section first.
 
 # Configuration
 
@@ -11,14 +11,16 @@ In your Etherpad Lite ``settings.json``:
 
 ```
   "ep_webhooks": {
+    "apiKey": "superSecretAPIkeySentInXApiKeyHeader"
     "pads": {
-        "update": ["http://dev.toru.ee:3000/api/internal/notifications/pads/update"]
+        "update": ["https://mydomain.com/api/internal/notifications/pads/update"]
     }
   }
 ```
 
 * Where the ``pads.update`` configures webhook for ``pads.update`` event. See the "Supported hooks" section.
 * You can specify multiple urls, each of them will be called on the event.
+* The hook endpoint can authorize the call by verifying the secret in the ``X-API-KEY`` header
 
 # Supported hooks
 
@@ -38,7 +40,6 @@ POST https://mydomain.com/api/notifications/pads/update
 # TODO
 
 * Create API to register and de-register hooks instead of EP ``settings.json`` configuration.
-    * Require EP APIKEY to authorize registration/de-registration.
     * Register must accept all parameters for the ``lodash.debounce`` ([https://lodash.com/docs#debounce]()). Right now the configuration is hardcoded. See ``serverHooks.js``.
     * API should do a pingback on registering to verify that the API is available.
     * Some kind of mechanism of verifying payloads. May want to borrow good ideas from GitHub [https://developer.github.com/webhooks/]() & [https://developer.github.com/v3/repos/hooks/#pubsubhubbub]().
