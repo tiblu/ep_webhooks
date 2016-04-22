@@ -27,14 +27,21 @@ var callPadUpdateWebhooks = _.debounce(function () {
     var changedPadIds = Object.keys(changedPads);
     changedPads = {};
 
-    logger.debug('pluginSettings', pluginSettings);
     var updateHooksToCall = _.get(pluginSettings, ['pads', 'update']);
 
     if (Array.isArray(updateHooksToCall)) {
         // Fire and forget - no guarantees of delivery for now
         updateHooksToCall.forEach(function (path) {
-            request
-                .post(path)
+            var req = request
+                .post(path);
+
+            // The support for self signed certificates
+            var caCert = pluginSettings.caCert;
+            if (caCert) {
+                req.ca(caCert);
+            }
+
+            req
                 .set('X-API-KEY', pluginSettings.apiKey)
                 .send({padIds: changedPadIds})
                 .end(function (err, res) {
@@ -88,6 +95,16 @@ exports.loadSettings = function (hook_name, args) {
     var settings = args.settings;
     if (settings && settings[PLUGIN_NAME]) {
         pluginSettings = settings[PLUGIN_NAME];
+
+        logger.debug('loadSettings', 'pluginSettings', pluginSettings);
+
+        var caCert = pluginSettings.caCert;
+        if (caCert) {
+            if (caCert.indexOf('-----BEGIN CERTIFICATE-----') !== 0) {
+                logger.error('Invalid configuration! If you provide caCert, make sure it looks like a cert.');
+                process.exit(1);
+            }
+        }
     } else {
         logger.warn('Plugin configuration not found, doing nothing.')
     }

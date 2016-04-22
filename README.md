@@ -11,7 +11,8 @@ In your Etherpad Lite ``settings.json``:
 
 ```
   "ep_webhooks": {
-    "apiKey": "superSecretAPIkeySentInXApiKeyHeader"
+    "apiKey": "superSecretAPIkeySentInXApiKeyHeader",
+    "caCert": "-----BEGIN CERTIFICATE-----\nMIIDoDCCAogCCQC85R3CVrF5aDANBgkqhkiG9w0BAQsFADCBkTELMAkGA1UEBhMC\nRUUxETAPBgNVBAgMCEhhcmp1bWFhMRAwDgYDVQQHDAdUYWxsaW5uMRIwEAYDVQQK\nDAlDaXRpemVuT1MxCzAJBgNVBAsMAklUMRQwEgYDVQQDDAtkZXYudG9ydS5lZTEm\nMCQGCSqGSIb3DQEJARYXY2l0aXplbm9zLmVzdEBnbWFpbC5jb20wHhcNMTUxMDAx\nMDkyMzE1WhcNNDMwMjE1MDkyMzE1WjCBkTELMAkGA1UEBhMCRUUxETAPBgNVBAgM\nCEhhcmp1bWFhMRAwDgYDVQQHDAdUYWxsaW5uMRIwEAYDVQQKDAlDaXRpemVuT1Mx\nCzAJBgNVBAsMAklUMRQwEgYDVQQDDAtkZXYudG9ydS5lZTEmMCQGCSqGSIb3DQEJ\nARYXY2l0aXplbm9zLmVzdEBnbWFpbC5jb20wggEiMA0GCSqGSIb3DQEBAQUAA4IB\nDwAwggEKAoIBAQDYt0FCtIgu0NcKQ+6T+tUNtTChg8g/1xgR0KS4B9zqdoxHuE/8\nHvylHff/1ysmFEiaFX6aoo3ww1PSY7tJ38+ozkks8Ga3wWADVuCVWytu1gpznuDO\neLq/TJ7MMKuev1SFumpTjPuN3ppD25yyb30Ajx29e9xXO0oa6s5TFD1nzZiZRyHs\n36BPsD3Dk7P3q6OKuuP/AEJZC8vvAPDJXh1X9o1+vhQ7mOzISE6CoKc1FheOLMAQ\nKqkLlMPDJgSSNzAUhB+BbNanhynkRDfhQnIDUpJjjNx8vzHKLoPtfA+RSYgA6DOD\n8jDgTPaszKNQG2VYauLd4Tg/tQx+GdlbtIhpAgMBAAEwDQYJKoZIhvcNAQELBQAD\nggEBAD2OFnsFll4TqhlWD2zNbVz5nUIqPIQZKi6uSmLLZdsn61dVuIMqfd1awdxL\ntyLu8IxmFqjGJuKwTm1IzDlkjG7JXB9TXGjj994wkBfJeEK01iUrS24GU2kWU0DU\nFe7GHHNi+x0nSEf2tfwQJw+9+WkR5jfq7eyUPKqlm8aETLT0Hk20KF/Tew9q/LAw\n8tQ1BpjmB5uMw7YPhu41Ef/Fcd3myVGBBgVSAjJHgc6Tq29FsOqh7Fi7zFHr/u5k\nP0A4iFQAld2k1Jwq+18/Qq8k8Jnpyh7DhefLNMc0HVg3H+3sCSHSDv0fEAa+7mRm\nR3jc3Y4rDxpM56PM9r3c19aKOYc=\n-----END CERTIFICATE-----"
     "pads": {
         "update": ["https://mydomain.com/api/internal/notifications/pads/update"]
     }
@@ -21,6 +22,7 @@ In your Etherpad Lite ``settings.json``:
 * Where the ``pads.update`` configures webhook for ``pads.update`` event. See the "Supported hooks" section.
 * You can specify multiple urls, each of them will be called on the event.
 * The hook endpoint can authorize the call by verifying the secret in the ``X-API-KEY`` header
+* The ``caCert`` is optional, it enables you to provide a CA certificate in case you call a service which has a certificate that is not in the Node.JS trusted list by default, like self-signed certificates.
 
 # Supported hooks
 
