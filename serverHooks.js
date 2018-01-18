@@ -25,6 +25,13 @@ var callPadUpdateWebhooks = _.debounce(function () {
     }
 
     var changedPadIds = changedPads;
+
+    var padIds = Object.keys(changedPadIds);
+    padIds.forEach(function (padId) {
+        changedPadIds[padId].forEach(function (user) {
+            delete user.author;
+        })
+    });
     changedPads = {};
 
     var updateHooksToCall = _.get(pluginSettings, ['pads', 'update']);
@@ -73,6 +80,8 @@ exports.handleMessage = function (hook_name, context, cb) {
             var clientId = _.get(context, 'client.id');
             var rev = _.get(padMessageHandler, 'sessioninfos[' + clientId + '].rev');
             var padId = _.get(padMessageHandler, 'sessioninfos[' + clientId + '].padId');
+            var author = _.get(padMessageHandler, 'sessioninfos[' + clientId + '].author');
+
             if (padId) {
                 logger.debug('handleMessage', 'PAD CHANGED', padId);
                 if (changedPads[padId]) {
@@ -83,8 +92,7 @@ exports.handleMessage = function (hook_name, context, cb) {
                 } else {
                     changedPads[padId] = [];    
                 }
-                changedPads[padId].push({userId: user.id, rev: rev}); // Use object, as then I don't need to worry about duplicates
-                callPadUpdateWebhooks();
+                changedPads[padId].push({userId: user.id, author: author, rev: rev}); // Use object, as then I don't need to worry about duplicates
             } else {
                 logger.warn('handleMessage', 'Pad changed, but no padId!');
             }
@@ -119,4 +127,14 @@ exports.loadSettings = function (hook_name, args) {
     } else {
         logger.warn('Plugin configuration not found, doing nothing.')
     }
+};
+
+exports.padUpdate = function (hook_name, context, cb) {
+    changedPads[context.pad.id].forEach(function (pad, key) {
+        if (pad.author === context.author) {
+            changedPads[context.pad.id][key].rev = context.pad.head;
+        }
+    });
+    callPadUpdateWebhooks();
+    return cb(true);
 };
