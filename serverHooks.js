@@ -130,11 +130,13 @@ exports.loadSettings = function (hook_name, args) {
 };
 
 exports.padUpdate = function (hook_name, context, cb) {
-    changedPads[context.pad.id].forEach(function (pad, key) {
-        if (pad.author === context.author) {
-            changedPads[context.pad.id][key].rev = context.pad.head;
-        }
-    });
-    callPadUpdateWebhooks();
-    return cb(true);
+    if(context.pad.id && changedPads[context.pad.id] && changedPads[context.pad.id].length) {
+        changedPads[context.pad.id].forEach(function (pad, key) {
+            if (pad.author === context.author) {
+                changedPads[context.pad.id][key].rev = context.pad.head;
+            }
+        });
+        callPadUpdateWebhooks();
+        return cb(true);
+    }
 };
