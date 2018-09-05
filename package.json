@@ -1,6 +1,6 @@
 {
   "name": "ep_webhooks",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Webhooks for Etherpad Lite.",
   "author": {
     "name": "Tiblu"
@@ -11,7 +11,7 @@
   },
   "readmeFilename": "README.md",
   "dependencies": {
-    "lodash": "^3.10.1",
-    "superagent": "1.8.3"
+    "lodash": "4.17.10",
+    "superagent": "3.7.0"
   }
 }
