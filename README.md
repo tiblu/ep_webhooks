@@ -1,9 +1,9 @@
 # ep_webhooks
 Webhooks for Etherpad Lite.
 
-# WORK IN PROGRESS
+# THIS PROJECT HAS MOVED!
 
-While it's somewhat useful, work is in progress. See the **TODO** below. Any ideas and contributions are welcome, see the **TODO** section first.
+Project has been moved under Citizen OS organization - https://github.com/citizenos/ep_webhooks.
 
 # Configuration
 
