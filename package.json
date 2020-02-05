@@ -11,7 +11,7 @@
   },
   "readmeFilename": "README.md",
   "dependencies": {
-    "lodash": "4.17.10",
+    "lodash": "4.17.15",
     "superagent": "3.7.0"
   }
 }
